@@ -5,27 +5,77 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class CustomView extends View {
-	private int status;
+	private int iColor;
 	private Paint paint;
 	private Rect rect;
+	private int x, y;
+	private int xDir, yDir;
+	private final int dirAmount = 1;
+	private Timer timer;
+	private Handler handler = new Handler();
+
+	private final int colorBg = Color.GRAY;
+	private final int colorTbl[] = {
+		Color.RED,
+		Color.GREEN,
+		Color.BLUE,
+		Color.BLACK,
+	};
+
+	public CustomView(Context context) {
+		this(context, null);
+	}
 
 	public CustomView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		Init();
+		this(context, attrs, 0);
 	}
 
-	private void Init() {
-		status = 0;
+	public CustomView(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		iColor = 0;
 		paint = new Paint();
-		paint.setColor(getColor());
 		rect = new Rect();
+		x = 10;
+		y = 10;
+		xDir = dirAmount;
+		yDir = dirAmount;
 	}
 
+	public void start() {
+		timer = new Timer(true);
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (x < 0) {
+							xDir = dirAmount;
+						} else if (x > 1000) {
+							xDir = -dirAmount;
+						}
+						if (y < 0) {
+							yDir = dirAmount;
+						} else if (y > 1400) {
+							yDir = -dirAmount;
+						}
+						x += xDir;
+						y += yDir;
+						invalidate();
+					}
+				});
+			}
+		}, 100, 1);
+	}
 	@Override
 	protected void onSizeChanged(int w, int h, int old_w, int old_h) {
 		rect.left = w / 10;
@@ -37,36 +87,19 @@ public class CustomView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
-		canvas.drawRect(rect, paint);
+		canvas.drawColor(colorBg);
+		canvas.drawRect(x, y, x + 100, y + 100, paint);
+		//paint.setColor(colorTbl[iColor]);
+		//canvas.drawRect(rect, paint);
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent e) {
-		if (e.getAction() == MotionEvent.ACTION_DOWN) {
-			status = (status >= 2) ? 0 : status+1;
-			paint.setColor(getColor());
+	public boolean onTouchEvent(MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			iColor++;
+			if (iColor >= colorTbl.length) iColor = 0;
 			invalidate();
 		}
 		return true;
-	}
-
-	private int getColor() {
-		int color;
-
-		switch (this.status) {
-			case 0:
-				color = Color.RED;
-				break;
-			case 1:
-				color = Color.GREEN;
-				break;
-			case 2:
-				color = Color.BLUE;
-				break;
-			default:
-				color = Color.BLACK;
-		}
-		return color;
 	}
 }
