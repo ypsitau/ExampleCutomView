@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="CustomView">
+		<attr name="period" format="integer" />
+		<attr name="x_init" format="integer" />
+		<attr name="y_init" format="integer" />
+		<attr name="bullet_color" format="color" />
+	</declare-styleable>
+
+	<declare-styleable name="Themes">
+		<attr name="customViewStyle" format="reference" />
+	</declare-styleable>
+</resources>
