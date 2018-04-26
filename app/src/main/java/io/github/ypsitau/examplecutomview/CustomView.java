@@ -10,10 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class CustomView extends View {
+public class CustomView extends View implements Runnable {
 	private int iColor;
 	private Paint paint;
 	private int x, y;
@@ -23,8 +20,8 @@ public class CustomView extends View {
 	private int xMax, yMax;
 	private int period;
 	private final int dirAmount = 4;
-	private Timer timer;
-	private Handler handler = new Handler();
+	private int colorBullet;
+	final Handler handler = new Handler();
 
 	private static final int[] colorTbl = new int[]{
 			Color.rgb(255, 192, 192),
@@ -45,6 +42,7 @@ public class CustomView extends View {
 		yDir = dirAmount;
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView);
 		period = typedArray.getInteger(R.styleable.CustomView_period, 10);
+		colorBullet = typedArray.getInteger(R.styleable.CustomView_colorBullet, Color.BLACK);
 		typedArray.recycle();
 	}
 
@@ -56,31 +54,26 @@ public class CustomView extends View {
 		this(context, null);
 	}
 
-	public void start() {
-		timer = new Timer(true);
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						if (x < 0) {
-							xDir = dirAmount;
-						} else if (x > xMax - wdBullet) {
-							xDir = -dirAmount;
-						}
-						if (y < 0) {
-							yDir = dirAmount;
-						} else if (y > yMax - htBullet) {
-							yDir = -dirAmount;
-						}
-						x += xDir;
-						y += yDir;
-						invalidate();
-					}
-				});
-			}
-		}, 0, period);
+	public void startPeriodicJob() {
+		handler.post(this);
+	}
+
+	@Override
+	public void run() {
+		if (x < 0) {
+			xDir = dirAmount;
+		} else if (x > xMax - wdBullet) {
+			xDir = -dirAmount;
+		}
+		if (y < 0) {
+			yDir = dirAmount;
+		} else if (y > yMax - htBullet) {
+			yDir = -dirAmount;
+		}
+		x += xDir;
+		y += yDir;
+		invalidate();
+		handler.postDelayed(this, period);
 	}
 
 	@Override
@@ -94,6 +87,7 @@ public class CustomView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawColor(colorTbl[iColor]);
+		paint.setColor(colorBullet);
 		canvas.drawRect(x, y, x + 100, y + 100, paint);
 	}
 

@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		for (int id : new int[]{R.id.customView1, R.id.customView2, R.id.customView3}){
 			CustomView customView = findViewById(id);
-			customView.start();
+			customView.startPeriodicJob();
 		}
 	}
 }
