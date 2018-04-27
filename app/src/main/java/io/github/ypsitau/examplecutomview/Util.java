@@ -18,7 +18,11 @@ public class Util {
 		final DateFormat df = new SimpleDateFormat("HH:mm:ss.SS ");
 		final Date date = new Date(System.currentTimeMillis());
 		String msg = df.format(date) + String.format(format, args);
-		Log.i(contextCur.getString(R.string.app_name), msg);
+		if (contextCur == null) {
+			Log.i("", msg);
+		} else {
+			Log.i(contextCur.getString(R.string.app_name), msg);
+		}
 		if (editText_log != null) {
 			editText_log.append(msg);
 			editText_log.setSelection(editText_log.getText().length());
