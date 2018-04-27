@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class CustomView extends View implements Runnable {
+public class CustomView extends View {
 	private int iColor;
 	private Paint paint;
 	private int x, y;
@@ -55,25 +55,25 @@ public class CustomView extends View implements Runnable {
 	}
 
 	public void startPeriodicJob() {
-		handler.post(this);
-	}
-
-	@Override
-	public void run() {
-		if (x < 0) {
-			xDir = dirAmount;
-		} else if (x > xMax - wdBullet) {
-			xDir = -dirAmount;
-		}
-		if (y < 0) {
-			yDir = dirAmount;
-		} else if (y > yMax - htBullet) {
-			yDir = -dirAmount;
-		}
-		x += xDir;
-		y += yDir;
-		invalidate();
-		handler.postDelayed(this, period);
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (x < 0) {
+					xDir = dirAmount;
+				} else if (x > xMax - wdBullet) {
+					xDir = -dirAmount;
+				}
+				if (y < 0) {
+					yDir = dirAmount;
+				} else if (y > yMax - htBullet) {
+					yDir = -dirAmount;
+				}
+				x += xDir;
+				y += yDir;
+				invalidate();
+				handler.postDelayed(this, period);
+			}
+		});
 	}
 
 	@Override

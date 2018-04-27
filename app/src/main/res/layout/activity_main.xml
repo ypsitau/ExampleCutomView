@@ -38,7 +38,7 @@
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginLeft="8dp"
-		original:period="30"
+		original:period="40"
 		original:colorBullet="#0000ff"
 		app:layout_constraintHorizontal_weight="2"
 		app:layout_constraintTop_toTopOf="@+id/customView2"
