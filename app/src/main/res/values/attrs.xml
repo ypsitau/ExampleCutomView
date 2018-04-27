@@ -2,8 +2,6 @@
 <resources>
 	<declare-styleable name="CustomView">
 		<attr name="period" format="integer" />
-		<attr name="x_init" format="integer" />
-		<attr name="y_init" format="integer" />
 		<attr name="colorBullet" format="color|reference" />
 	</declare-styleable>
 

@@ -12,38 +12,55 @@
 		android:id="@+id/customView1"
 		android:layout_width="wrap_content"
 		android:layout_height="0dp"
-		original:period="10"
-		original:colorBullet="#ff0000"
+		app:layout_constraintVertical_weight="2"
 		app:layout_constraintTop_toTopOf="parent"
 		app:layout_constraintBottom_toTopOf="@+id/customView2"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="1.0" />
+		original:period="10"
+		original:colorBullet="#ff0000" />
 
 	<io.github.ypsitau.examplecutomview.CustomView
 		android:id="@+id/customView2"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginTop="8dp"
-		original:period="20"
-		original:colorBullet="#00ff00"
+		app:layout_constraintVertical_weight="2"
 		app:layout_constraintHorizontal_weight="1"
 		app:layout_constraintTop_toBottomOf="@+id/customView1"
-		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintBottom_toTopOf="@+id/editText_log"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toStartOf="@+id/customView3" />
+		app:layout_constraintEnd_toStartOf="@+id/customView3"
+		original:period="20"
+		original:colorBullet="#00ff00" />
 
 	<io.github.ypsitau.examplecutomview.CustomView
 		android:id="@+id/customView3"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
 		android:layout_marginLeft="8dp"
-		original:period="40"
-		original:colorBullet="#0000ff"
 		app:layout_constraintHorizontal_weight="2"
 		app:layout_constraintTop_toTopOf="@+id/customView2"
-		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintBottom_toBottomOf="@+id/customView2"
 		app:layout_constraintStart_toEndOf="@+id/customView2"
-		app:layout_constraintEnd_toEndOf="parent" />
+		app:layout_constraintEnd_toEndOf="parent"
+		original:period="40"
+		original:colorBullet="#0000ff" />
+
+	<EditText
+		android:id="@+id/editText_log"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		android:layout_marginTop="8dp"
+		android:background="#ffffff"
+		android:editable="false"
+		android:gravity="top"
+		android:textSize="10sp"
+		android:typeface="monospace"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/customView2"
+		app:layout_constraintVertical_weight="1" />
 
 </android.support.constraint.ConstraintLayout>

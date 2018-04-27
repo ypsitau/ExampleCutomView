@@ -87,6 +87,10 @@ public class CustomView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawColor(colorTbl[iColor]);
+		paint.setColor(Color.BLACK);
+		paint.setTextSize(60);
+		String str = String.format("Period: %d", period);
+		canvas.drawText(str, 0, 60, paint);
 		paint.setColor(colorBullet);
 		canvas.drawRect(x, y, x + 100, y + 100, paint);
 	}
@@ -94,10 +98,16 @@ public class CustomView extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		int action = event.getAction();
+		if (action == MotionEvent.ACTION_DOWN) {
+			Util.Printf("%08x ACTION_DOWN (%.2f, %.2f)\n",
+					System.identityHashCode(this), event.getX(), event.getY());
 			iColor++;
 			if (iColor >= colorTbl.length) iColor = 0;
 			invalidate();
+		} else if (action == MotionEvent.ACTION_UP) {
+			Util.Printf("%08x ACTION_UP   (%.2f, %.2f)\n",
+					System.identityHashCode(this), event.getX(), event.getY());
 		}
 		return true;
 	}
