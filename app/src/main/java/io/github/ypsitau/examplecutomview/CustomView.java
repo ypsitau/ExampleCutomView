@@ -13,15 +13,17 @@ import android.view.View;
 public class CustomView extends View {
 	private int iColor;
 	private Paint paint;
-	private int x, y;
-	private int xDir, yDir;
-	private int wdBullet;
-	private int htBullet;
-	private int xMax, yMax;
+	private float x, y;
+	private float xDir, yDir;
+	private float sizeBullet;
+	private float textSize;
+	private float xMax, yMax;
 	private int period;
-	private final int dirAmount = 4;
+	private float dirAmount;
 	private int colorBullet;
 	final Handler handler = new Handler();
+	final float dp = getContext().getResources().getDisplayMetrics().density;
+	final float sp = getContext().getResources().getDisplayMetrics().scaledDensity;
 
 	private static final int[] colorTbl = new int[]{
 			Color.rgb(255, 192, 192),
@@ -34,16 +36,18 @@ public class CustomView extends View {
 		super(context, attrs, defStyleAttr);
 		iColor = 0;
 		paint = new Paint();
-		x = 10;
-		y = 10;
-		wdBullet = 100;
-		htBullet = 100;
+		x = 10 * dp;
+		y = 10 * dp;
+		dirAmount = 2 * dp;
 		xDir = dirAmount;
 		yDir = dirAmount;
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView);
 		period = typedArray.getInteger(R.styleable.CustomView_period, 10);
+		sizeBullet = typedArray.getDimension(R.styleable.CustomView_sizeBullet, 60f * dp);
+		textSize = typedArray.getDimension(R.styleable.CustomView_textSize, 20f * sp);
 		colorBullet = typedArray.getInteger(R.styleable.CustomView_colorBullet, Color.BLACK);
 		typedArray.recycle();
+		Util.Printf("dp=%f, sp=%f\n", dp, sp);
 	}
 
 	public CustomView(Context context, AttributeSet attrs) {
@@ -60,12 +64,12 @@ public class CustomView extends View {
 			public void run() {
 				if (x < 0) {
 					xDir = dirAmount;
-				} else if (x > xMax - wdBullet) {
+				} else if (x > xMax - sizeBullet) {
 					xDir = -dirAmount;
 				}
 				if (y < 0) {
 					yDir = dirAmount;
-				} else if (y > yMax - htBullet) {
+				} else if (y > yMax - sizeBullet) {
 					yDir = -dirAmount;
 				}
 				x += xDir;
@@ -88,11 +92,11 @@ public class CustomView extends View {
 		super.onDraw(canvas);
 		canvas.drawColor(colorTbl[iColor]);
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(60);
+		paint.setTextSize(textSize);
 		String str = String.format("Period: %d", period);
-		canvas.drawText(str, 0, 60, paint);
+		canvas.drawText(str, 0, textSize, paint);
 		paint.setColor(colorBullet);
-		canvas.drawRect(x, y, x + 100, y + 100, paint);
+		canvas.drawRect(x, y, x + sizeBullet, y + sizeBullet, paint);
 	}
 
 	@Override
