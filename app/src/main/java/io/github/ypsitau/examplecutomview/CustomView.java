@@ -11,6 +11,15 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class CustomView extends View {
+	private static final int[] colorTbl = new int[]{
+			Color.rgb(255, 192, 192),
+			Color.rgb(192, 255, 192),
+			Color.rgb(192, 192, 255),
+			Color.rgb(255, 255, 192),
+	};
+	final Handler handler = new Handler();
+	final float dp = getContext().getResources().getDisplayMetrics().density;
+	final float sp = getContext().getResources().getDisplayMetrics().scaledDensity;
 	private int iColor;
 	private Paint paint;
 	private float x, y;
@@ -21,16 +30,6 @@ public class CustomView extends View {
 	private int period;
 	private float dirAmount;
 	private int colorBullet;
-	final Handler handler = new Handler();
-	final float dp = getContext().getResources().getDisplayMetrics().density;
-	final float sp = getContext().getResources().getDisplayMetrics().scaledDensity;
-
-	private static final int[] colorTbl = new int[]{
-			Color.rgb(255, 192, 192),
-			Color.rgb(192, 255, 192),
-			Color.rgb(192, 192, 255),
-			Color.rgb(255, 255, 192),
-	};
 
 	public CustomView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);

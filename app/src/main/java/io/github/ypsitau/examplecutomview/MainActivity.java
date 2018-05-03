@@ -15,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
 			CustomView customView = findViewById(id);
 			customView.startPeriodicJob();
 		}
-		Util.initLog(this, (EditText)findViewById(R.id.editText_log));
+		Util.init(this, (EditText)findViewById(R.id.editText_log));
 	}
 }
