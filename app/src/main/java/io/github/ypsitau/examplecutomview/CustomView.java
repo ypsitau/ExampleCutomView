@@ -46,7 +46,7 @@ public class CustomView extends View {
 		textSize = typedArray.getDimension(R.styleable.CustomView_textSize, 20f * sp);
 		colorBullet = typedArray.getInteger(R.styleable.CustomView_colorBullet, Color.BLACK);
 		typedArray.recycle();
-		Util.Printf("dp=%f, sp=%f\n", dp, sp);
+		App.Printf("dp=%f, sp=%f\n", dp, sp);
 	}
 
 	public CustomView(Context context, AttributeSet attrs) {
@@ -103,13 +103,13 @@ public class CustomView extends View {
 		super.onTouchEvent(event);
 		int action = event.getAction();
 		if (action == MotionEvent.ACTION_DOWN) {
-			Util.Printf("%08x ACTION_DOWN (%.2f, %.2f)\n",
+			App.Printf("%08x ACTION_DOWN (%.2f, %.2f)\n",
 					System.identityHashCode(this), event.getX(), event.getY());
 			iColor++;
 			if (iColor >= colorTbl.length) iColor = 0;
 			invalidate();
 		} else if (action == MotionEvent.ACTION_UP) {
-			Util.Printf("%08x ACTION_UP   (%.2f, %.2f)\n",
+			App.Printf("%08x ACTION_UP   (%.2f, %.2f)\n",
 					System.identityHashCode(this), event.getX(), event.getY());
 		}
 		return true;

@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-	static TextView textView_log;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -15,6 +14,6 @@ public class MainActivity extends AppCompatActivity {
 			CustomView customView = findViewById(id);
 			customView.startPeriodicJob();
 		}
-		Util.init(this, (EditText)findViewById(R.id.editText_log));
+		App.setLogEditText((EditText)findViewById(R.id.editText_log), true);
 	}
 }
